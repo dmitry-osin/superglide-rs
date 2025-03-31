@@ -107,6 +107,12 @@ pub fn run() {
     let hook_state_for_setup = hook_state.clone();
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
+            if let Some(win) = app.get_webview_window("main") {
+                let _ = win.show();
+                let _ = win.set_focus();
+            }
+        }))
         .manage(hook_state)
         .setup(|app| {
             // Start global keyboard hook

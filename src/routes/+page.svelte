@@ -95,18 +95,18 @@
     jump_key: 'Space',
     crouch_key: 'ControlLeft',
     fps: 180,
-    delay_ms: 5.0,
-    jump_hold_us: 500,
+    delay_ms: 3.5,
+    jump_hold_us: 300,
     crouch_hold_ms: 300,
     theme: 'dark',
     language: 'en',
   };
 
   const FPS_PRESETS = [
-    { fps: 144, delay: 7.0 },
-    { fps: 180, delay: 5.0 },
-    { fps: 240, delay: 4.5 },
-    { fps: 300, delay: 3.8 },
+    { fps: 144, delay: 4.2 },
+    { fps: 180, delay: 3.5 },
+    { fps: 240, delay: 2.5 },
+    { fps: 300, delay: 2.22 },
   ];
 
   const KEY_LABELS: Record<string, string> = {
@@ -299,27 +299,35 @@
     }
   }
 
+  const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
+
   onMount(async () => {
-    appWindow = getCurrentWindow();
+    if (isTauri) {
+      appWindow = getCurrentWindow();
+    }
+
     await loadSettings();
 
     window.addEventListener('keydown', handleWindowKeydown, true);
     window.addEventListener('keyup', handleWindowKeyup, true);
 
-    unlistenCapture = await listen<{ field: string; key: string }>('key-captured', (event) => {
-      const { field, key } = event.payload;
-      settings = { ...settings, [field]: key };
-      isCapturing = null;
-      debounceSave();
-    });
+    if (isTauri) {
+      unlistenCapture = await listen<{ field: string; key: string }>('key-captured', (event) => {
+        const { field, key } = event.payload;
+        settings = { ...settings, [field]: key };
+        isCapturing = null;
+        debounceSave();
+      });
 
-    unlistenTriggered = await listen('superglide-triggered', () => {
-      flashTriggered = true;
-      setTimeout(() => { flashTriggered = false; }, 300);
-    });
+      unlistenTriggered = await listen('superglide-triggered', () => {
+        flashTriggered = true;
+        setTimeout(() => { flashTriggered = false; }, 300);
+      });
+
+      try { await appWindow!.show(); } catch { /* window already visible */ }
+    }
 
     isReady = true;
-    try { await appWindow.show(); } catch { /* dev mode — window already visible */ }
   });
 
   onDestroy(() => {

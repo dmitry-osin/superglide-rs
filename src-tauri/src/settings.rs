@@ -17,7 +17,7 @@ pub struct Settings {
 }
 
 fn default_jump_hold_us() -> u64 {
-    500
+    300
 }
 
 impl Default for Settings {
@@ -26,9 +26,9 @@ impl Default for Settings {
             trigger_key: "CapsLock".to_string(),
             jump_key: "Space".to_string(),
             crouch_key: "ControlLeft".to_string(),
-            fps: 240,
-            delay_ms: 5.0,
-            jump_hold_us: 500,
+            fps: 180,
+            delay_ms: 3.5,
+            jump_hold_us: 300,
             crouch_hold_ms: 300,
             theme: "light".to_string(),
             language: "en".to_string(),

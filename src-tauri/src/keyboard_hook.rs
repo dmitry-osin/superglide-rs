@@ -229,7 +229,7 @@ fn execute_superglide(settings: &Settings) {
     thread::sleep(Duration::from_micros(settings.jump_hold_us));
     let _ = simulate(&EventType::KeyRelease(jump_key));
 
-    let delay_us = ((settings.delay_ms * 1000.0) as u64).max(500);
+    let delay_us = (settings.delay_ms * 1000.0) as u64;
     thread::sleep(Duration::from_micros(delay_us));
 
     let _ = simulate(&EventType::KeyPress(crouch_key.clone()));
