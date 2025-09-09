@@ -4,6 +4,8 @@ A powerful desktop application for automating Superglide techniques in **Apex Le
 
 ## Overview
 
+![SuperGlide RS](doc/main-page.png)
+
 Superglide is an advanced movement technique in Apex Legends that requires precise timing of multiple key presses. This application streamlines the execution by automating the key sequences, making it more accessible and consistent.
 
 ## Features
@@ -59,4 +61,4 @@ For precise calibration of timing values:
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-**Copyright (c) 2024 Dmitry Osin** <d@osin.pro>
+**Copyright (c) 2025 Dmitry Osin** <d@osin.pro>
