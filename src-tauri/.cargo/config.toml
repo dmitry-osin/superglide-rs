@@ -1,0 +1,5 @@
+# LOCAL ONLY — overrides the linker to avoid picking up MSYS2's link.exe from PATH.
+# This file is intentionally deleted in CI (see .github/workflows/release.yml).
+# If the MSVC version changes, update the path below.
+[target.x86_64-pc-windows-msvc]
+linker = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\link.exe"
