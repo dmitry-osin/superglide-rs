@@ -10,6 +10,7 @@
     crouch_key: string;
     fps: number;
     delay_ms: number;
+    jump_hold_us: number;
     crouch_hold_ms: number;
     theme: string;
     language: string;
@@ -27,8 +28,10 @@
       section_timing: 'TIMING',
       section_keys: 'KEY BINDINGS',
       label_delay: 'DELAY',
+      label_jump_hold: 'JUMP HOLD',
       label_hold: 'HOLD TIME',
       desc_delay: 'Between jump and crouch',
+      desc_jump_hold: 'Jump key press duration',
       desc_hold: 'Crouch hold duration',
       key_trigger: 'TRIGGER',
       key_jump: 'JUMP',
@@ -56,8 +59,10 @@
       section_timing: 'ТАЙМИНГИ',
       section_keys: 'КЛАВИШИ',
       label_delay: 'ЗАДЕРЖКА',
+      label_jump_hold: 'УДЕРЖАНИЕ JUMP',
       label_hold: 'УДЕРЖАНИЕ',
       desc_delay: 'Между прыжком и присядом',
+      desc_jump_hold: 'Длительность нажатия прыжка',
       desc_hold: 'Длительность удержания',
       key_trigger: 'ТРИГГЕР',
       key_jump: 'ПРЫЖОК',
@@ -91,6 +96,7 @@
     crouch_key: 'ControlLeft',
     fps: 180,
     delay_ms: 5.0,
+    jump_hold_us: 500,
     crouch_hold_ms: 300,
     theme: 'dark',
     language: 'en',
@@ -420,6 +426,17 @@
               bind:value={settings.delay_ms} on:change={debounceSave}
               min="0.1" max="50" step="0.1" />
             <span class="timing-unit">ms</span>
+          </div>
+        </div>
+        <div class="timing-divider"></div>
+        <div class="timing-item">
+          <span class="timing-label">{t.label_jump_hold}</span>
+          <span class="timing-desc">{t.desc_jump_hold}</span>
+          <div class="timing-input-row">
+            <input type="number" class="timing-input"
+              bind:value={settings.jump_hold_us} on:change={debounceSave}
+              min="100" max="5000" step="100" />
+            <span class="timing-unit">µs</span>
           </div>
         </div>
         <div class="timing-divider"></div>

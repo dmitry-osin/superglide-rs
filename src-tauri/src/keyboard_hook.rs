@@ -199,9 +199,15 @@ fn handle_event(event: Event, app_handle: &AppHandle, state: &Arc<Mutex<HookStat
             let state_clone = state.clone();
             let app_handle_clone = app_handle.clone();
             thread::spawn(move || {
-                execute_superglide(&settings);
+                let result = std::panic::catch_unwind(|| {
+                    execute_superglide(&settings);
+                });
                 state_clone.lock().unwrap().is_simulating = false;
-                let _ = app_handle_clone.emit("superglide-triggered", ());
+                if result.is_ok() {
+                    let _ = app_handle_clone.emit("superglide-triggered", ());
+                } else {
+                    eprintln!("execute_superglide panicked, is_simulating reset");
+                }
             });
         }
         Action::None => {}
@@ -221,7 +227,7 @@ fn execute_superglide(settings: &Settings) {
 
     // Press and immediately release jump
     let _ = simulate(&EventType::KeyPress(jump_key.clone()));
-    thread::sleep(Duration::from_micros(500));
+    thread::sleep(Duration::from_micros(settings.jump_hold_us));
     let _ = simulate(&EventType::KeyRelease(jump_key));
 
     // Wait configured delay between jump and crouch (frame-precise)

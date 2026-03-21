@@ -9,9 +9,15 @@ pub struct Settings {
     pub crouch_key: String,
     pub fps: u32,
     pub delay_ms: f64,
+    #[serde(default = "default_jump_hold_us")]
+    pub jump_hold_us: u64,
     pub crouch_hold_ms: u64,
     pub theme: String,
     pub language: String,
+}
+
+fn default_jump_hold_us() -> u64 {
+    500
 }
 
 impl Default for Settings {
@@ -22,6 +28,7 @@ impl Default for Settings {
             crouch_key: "ControlLeft".to_string(),
             fps: 240,
             delay_ms: 5.0,
+            jump_hold_us: 500,
             crouch_hold_ms: 300,
             theme: "light".to_string(),
             language: "en".to_string(),
