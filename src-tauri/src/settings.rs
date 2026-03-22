@@ -26,7 +26,7 @@ impl Default for Settings {
             trigger_key: "CapsLock".to_string(),
             jump_key: "Space".to_string(),
             crouch_key: "ControlLeft".to_string(),
-            fps: 240,
+            fps: 180,
             delay_ms: 5.0,
             jump_hold_us: 500,
             crouch_hold_ms: 300,
